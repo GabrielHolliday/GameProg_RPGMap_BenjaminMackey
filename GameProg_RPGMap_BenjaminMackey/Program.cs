@@ -53,19 +53,22 @@ namespace GameProg_RPGMap_BenjaminMackey
         }
         static int mapSize = 1;
 
-        static void DrawBorder()
-        {
-
-
-
-        }
+        
         static async void DisplayMapToScreen()
         {
             while (runScreen)
             {
-                
+                Console.SetCursorPosition(4 * mapSize - 1, 2 * mapSize -1);
+                Console.Write("+");
+                for (int i = 0; i < map.GetLength(1) * mapSize; i++)
+                {
+                 
+                    Console.Write("-");
+                }
+                Console.Write("+");
                 for (int i = 0; i < map.GetLength(0); i++)
                 {
+                  
                     for (int j = 0; j < map.GetLength(1); j++)
                     {
                         Console.SetCursorPosition((j + 4) *  mapSize, (i + 2) * mapSize);
@@ -84,24 +87,42 @@ namespace GameProg_RPGMap_BenjaminMackey
                                 Console.ForegroundColor = ConsoleColor.Yellow;
                                 break;
                         }
-                        
+                        ConsoleColor bounceback = Console.ForegroundColor;
                         for (int k = 0; k < mapSize; k++)
                         {
                             for (int h = 0; h < (mapSize); h++)
                             {
+                                Console.ForegroundColor = bounceback;
                                 Console.SetCursorPosition(((j + 4) * mapSize) + k, ((i + 2) * mapSize) + h);
                                 Console.WriteLine(map[i, j]);
+                                bounceback = Console.ForegroundColor;
+                                if (j == map.GetLength(1) - 1 )
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Magenta;
+                                    Console.SetCursorPosition(((j + 4) * mapSize) + mapSize, ((i + 2) * mapSize) + h);
+                                    Console.WriteLine("|");
+                                }
+                                else if(j == 0)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Magenta;
+                                    Console.SetCursorPosition(((j + 4) * mapSize) - 1, ((i + 2) * mapSize) + h);
+                                    Console.WriteLine("|");
+                                }
                             }
                             
                         }
-                    }
                         
+                    }
+
                 }
-                //viruses
-               
-
-
-                //-----
+                Console.SetCursorPosition(4 * mapSize - 1, ((map.GetLength(0) + 2) * mapSize));
+                Console.Write("+");
+                for (int i = 0; i < map.GetLength(1) * mapSize; i++)
+                {
+                    
+                    Console.Write("-");
+                }
+                Console.Write("+");
                 await Task.Delay(100);
             }
 
